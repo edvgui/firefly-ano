@@ -1,0 +1,19 @@
+# Install uv
+FROM python:3.14-slim
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
+
+RUN --mount=type=bind,target=/tmp/ano,z <<EOF
+set -e
+
+# Copy the script to the root of the image
+cp /tmp/ano/script.py /script.py
+
+# Copy the lock file, to ensure that the image is always build with
+# the same dependencies
+cp /tmp/ano/script.py.lock /script.py.lock
+
+# Execute the script a first time to cache all the dependencies
+/script.py --help
+EOF
+
+ENTRYPOINT ["/script.py"]
