@@ -2,7 +2,7 @@
 FROM python:3.14-slim
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 
-RUN --mount=type=bind,target=/tmp/ano,z <<EOF
+RUN --mount=type=bind,target=/tmp/ano <<EOF
 set -e
 
 # Copy the script to the root of the image
